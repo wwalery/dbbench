@@ -1,0 +1,53 @@
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
+  repositories {
+    mavenCentral()
+		maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+	}
+
+  
+dependencies {
+  compile files('lib/wwlib-2.31.0.jar')
+  compile files('lib/example-db.jar')
+  //		compile files('lib/jta-1.0.1B.jar')
+  compile 'org.hibernate:hibernate-core:3.3.2.GA'
+  compile 'org.hibernate:hibernate-annotations:3.4.0.GA'
+  compile 'org.hibernate:hibernate-commons-annotations:3.3.0.ga'
+  compile 'org.hsqldb:hsqldb:latest.integration'
+  compile 'com.querydsl:querydsl-core:4.1.4'
+  compile 'com.querydsl:querydsl-sql:4.1.4'
+//  compile 'com.querydsl:querydsl-jpa:4.1.4'
+//  compile 'com.querydsl:querydsl-apt:4.1.4'
+//  compile 'com.mysema.querydsl:querydsl-jdo:3.7.4'
+//  compile "com.mysema.querydsl:querydsl-apt:3.7.4:jpa"
+  compile 'javax.transaction:jta:1.1'
+  compile 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
+  
+
+  testCompile 'junit:junit:latest.integration'
+  testCompile 'org.hamcrest:hamcrest-all:latest.integration'
+  testCompile 'org.testng:testng:latest.integration'
+		
+}
+
+task copyProject(type: Copy) {
+  //    from "lib"
+  from configurations.runtime
+  from "build/libs"
+  into "output/lib"
+  include('*.jar')
+}
+
+task copyRes(type: Copy) {
+  from "src/main/resources"
+  into "output"
+}
+
+build.finalizedBy(copyProject)  
+build.finalizedBy(copyRes)  
+

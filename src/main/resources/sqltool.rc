@@ -1,0 +1,4 @@
+urlid example
+url jdbc:hsqldb:example/example
+username sa
+password

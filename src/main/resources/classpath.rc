@@ -1,0 +1,9 @@
+#!/bin/sh
+
+CP=.
+libs=`ls ./lib/*.jar`
+for lib in $libs; do
+ CP=$CP:$lib
+done
+
+export CLASSPATH=$CLASSPATH:$CP
